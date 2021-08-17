@@ -1,21 +1,29 @@
 #!/bin/bash
-optstring="h:"
+optstring=":hH:"
 nmaphosts='192.168.1.0/24'
-# NAME
-#     ipscan
-#
-# SYNOPSIS
-#     ipscan [OPTION]
-#
-# DESCRIPTION
-#     Scan a network for IP addresses that have hostnames
-#
-#     -h hosts - The hosts to scan - Defaults to 192.168.1.0/24
 
 while getopts ${optstring} arg; do
     case ${arg} in
-        h)
+        :)                                    # If expected argument omitted:
+            echo "Error: -${OPTARG} requires an argument"
+            exit
+            ;;
+        H)
             nmaphosts="${OPTARG}"
+            ;;
+        h)
+            echo 'NAME'
+            echo '    ipscan'
+            echo ''
+            echo 'SYNOPSIS'
+            echo '    ipscan [OPTION]'
+            echo ''
+            echo 'DESCRIPTION'
+            echo '    Scan a network for IP addresses that have hostnames'
+            echo '    -H (hosts) - The hosts to scan - Defaults to 192.168.1.0/24, which scans 192.168.1.0 to 192.168.1.255'
+            echo '    -h - Print this help'
+            exit
+            ;;
     esac
 done
 
