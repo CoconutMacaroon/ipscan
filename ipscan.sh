@@ -18,4 +18,12 @@ while getopts ${optstring} arg; do
             nmaphosts="${OPTARG}"
     esac
 done
-nmap -sn -Pn "${nmaphosts}" | grep --color=never -E '[^\n]+\([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}\)$'
+
+# first do a normal scan (no port scan)
+results=$(nmap -sn "${nmaphosts}")
+
+# then for any hidden devices, do it again a different way to find them
+results+=$(nmap -sn -Pn "${nmaphosts}")
+
+# sort and remove duplicate results, and remove ones that don't have a hostname
+echo "$results" | sort -fu ipscan.tmp | grep --color=never -E '[^\n]+\([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}\)$'
