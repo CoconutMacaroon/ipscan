@@ -28,9 +28,11 @@ while getopts ${optstring} arg; do
 done
 
 # first do a normal scan (no port scan)
+echo 'Running normal scan...'
 results=$(nmap -sn "${nmaphosts}")
 
 # then for any hidden devices, do it again a different way to find them
+echo 'Running deeper scan...'
 results+=$(nmap -sn -Pn "${nmaphosts}")
 
 # sort and remove duplicate results, and remove ones that don't have a hostname
