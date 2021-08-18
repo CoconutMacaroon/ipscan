@@ -34,4 +34,4 @@ results=$(nmap -sn "${nmaphosts}")
 results+=$(nmap -sn -Pn "${nmaphosts}")
 
 # sort and remove duplicate results, and remove ones that don't have a hostname
-echo "$results" | sort -fu ipscan.tmp | grep --color=never -E '[^\n]+\([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}\)$'
+echo "$results" | sort -fu | grep --color=never -E '[^\n]+\([0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}\)$'
