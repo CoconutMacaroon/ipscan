@@ -2,7 +2,7 @@
 optstring=":hH:"
 nmaphosts='192.168.1.0/24'
 
-while getopts ${optstring} arg; do
+while getopts ${optstring} arg; d
     case ${arg} in
         :)                                    # If expected argument omitted:
             echo "Error: -${OPTARG} requires an argument"
