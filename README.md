@@ -8,6 +8,13 @@ I wanted a tool to quickly get all the IP's that were up and had hostnames to fi
 
 Clone the repo (```git clone https://github.com/CoconutMacaroon/ipscan.git```), and run the commands below. If you want to scan different hosts (default is `192.168.1.0/24`, change the `HOSTS_TO_SCAN` variable in `ipscan`.
 ```
+$ git clone https://github.com/CoconutMacaroon/ipscan.git
+Cloning into 'ipscan'...
+remote: Enumerating objects: 46, done.
+remote: Counting objects: 100% (46/46), done.
+remote: Compressing objects: 100% (43/43), done.
+remote: Total 46 (delta 13), reused 0 (delta 0), pack-reused 0
+Unpacking objects: 100% (46/46), 12.77 KiB | 502.00 KiB/s, done.
 $ chmod +x ipscan
 $ ./ipscan
 Running standard ping scan...
