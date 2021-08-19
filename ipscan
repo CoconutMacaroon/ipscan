@@ -19,6 +19,7 @@ DNS_SERVER = '192.168.1.1'
 def hasHostname(hostnames):
     return len(hostnames) != 0
 
+
 def isValidIPAddress(IP_ADDR):
     try:
         ipaddress.ip_address(IP_ADDR)
