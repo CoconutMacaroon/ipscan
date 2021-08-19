@@ -5,6 +5,7 @@ try:
     import tableprint
     import numpy
     import ipaddress
+    from typing import List
 except ModuleNotFoundError:
     print("Required modules not found. This program requires Python 3 and required dependicies installed. Run 'pip install python-libnmap tableprint numpy' to install dependicies and try again.")
     exit(1)
@@ -13,11 +14,11 @@ HOSTS_TO_SCAN = '192.168.1.0/24'
 DNS_SERVER = None
 
 
-def hasHostname(hostnames):
+def hasHostname(hostnames: List[str]) -> bool:
     return len(hostnames) != 0
 
 
-def isValidIPAddress(IP_ADDR):
+def isValidIPAddress(IP_ADDR: str) -> bool:
     try:
         ipaddress.ip_address(IP_ADDR)
     except ValueError:
@@ -25,13 +26,13 @@ def isValidIPAddress(IP_ADDR):
     return True
 
 
-def removeDuplicatesFromList(array):
+def removeDuplicatesFromList(array: List):
     b = list()
     [b.append(sublist) for sublist in array if sublist not in b]
     return b
 
 
-def runNmapScan(nmapOptions, dnsServer):
+def runNmapScan(nmapOptions: str, dnsServer: str):
     if DNS_SERVER is not None:
         if(isValidIPAddress(dnsServer) is True):
             nmapOptions += ' --dns-servers '
@@ -45,11 +46,14 @@ def runNmapScan(nmapOptions, dnsServer):
     return nmap_report
 
 
-def Convert2DArrayToNumpyArray(arr):
+def Convert2DArrayToNumpyArray(arr: List):
     return numpy.array(arr)
 
 
-def print2DArrayAsTable(arr, alignment, tableHeaders):
+def print2DArrayAsTable(
+        arr: List[list],
+        alignment: str,
+        tableHeaders: List[str]):
     tableprint.table(Convert2DArrayToNumpyArray(arr),
                      tableHeaders, align=alignment)
 
