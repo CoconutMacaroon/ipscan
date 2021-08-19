@@ -6,7 +6,7 @@ I wanted a tool to quickly get all the IP's that were up and had hostnames to fi
 
 ### Recommended (with the Python script)
 
-Run the commands below to download and setup. If you want to scan different hosts (default is `192.168.1.0/24`, change the `HOSTS_TO_SCAN` variable in `ipscan`.
+Run the commands below to download and setup. If you want to scan different hosts (default is `192.168.1.0/24`), change the `HOSTS_TO_SCAN` variable in `ipscan`. For a custom DNS server, change `DNS_SERVER` in `ipscan`. If `DNS_SERVER` is `None`, the default will be assumed.
 ```
 $ git clone https://github.com/CoconutMacaroon/ipscan.git
 Cloning into 'ipscan'...
