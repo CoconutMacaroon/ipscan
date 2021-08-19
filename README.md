@@ -40,6 +40,7 @@ Running deeper ping scan to find hidden devices...
 
 ### Old way (with the Bash script)
 
-> Note. This doesn't support arguments to the script. For that, simply `curl -L https://bit.ly/coconutmacaroon-ipscan -o ipscan.sh`, add execute privledgee (`chmod +x ipscan.sh`), and run it (`./ipscan.sh [OPTIONS]`).
+| :warning: | This script is depricated and will be removed. Please use the Python script instead |
+|-----------|:------------------------------------------------------------------------------------|
 
-The one-liner to run it with no options is `curl -sL https://bit.ly/coconutmacaroon-ipscan | bash`. 
+The one-liner to run it with no options is `curl -sL https://bit.ly/coconutmacaroon-ipscan | bash`. This doesn't support arguments to the script. For that, simply `curl -L https://bit.ly/coconutmacaroon-ipscan -o ipscan.sh`, add execute privledgee (`chmod +x ipscan.sh`), and run it (`./ipscan.sh [OPTIONS]`).
