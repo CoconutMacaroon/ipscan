@@ -1,7 +1,4 @@
 #!/usr/bin/python3
-from typing import Type
-
-
 try:
     import libnmap.process
     import libnmap.parser
@@ -13,7 +10,7 @@ except ModuleNotFoundError:
     exit(1)
 
 HOSTS_TO_SCAN = '192.168.1.0/24'
-DNS_SERVER = '192.168.1.1'
+DNS_SERVER = None
 
 
 def hasHostname(hostnames):
@@ -34,11 +31,12 @@ def removeDuplicatesFromList(array):
 
 
 def runNmapScan(nmapOptions, dnsServer):
-    if(isValidIPAddress(dnsServer) is True):
-        nmapOptions += ' --dns-servers '
-        nmapOptions += dnsServer
-    else:
-        raise TypeError("Invalid DNS server")
+    if DNS_SERVER is not None:
+        if(isValidIPAddress(dnsServer) is True):
+            nmapOptions += ' --dns-servers '
+            nmapOptions += dnsServer
+        else:
+            raise TypeError("Invalid DNS server")
 
     nm = libnmap.process.NmapProcess(HOSTS_TO_SCAN, options=nmapOptions)
     rc = nm.run()
