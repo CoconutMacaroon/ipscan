@@ -17,6 +17,9 @@ remote: Total 46 (delta 13), reused 0 (delta 0), pack-reused 0
 Unpacking objects: 100% (46/46), 12.77 KiB | 502.00 KiB/s, done.
 $ cd ipscan/
 $ chmod +x ipscan
+```
+And to run the script...
+```
 $ ./ipscan
 Running standard ping scan...
 Running deeper ping scan to find hidden devices...
