@@ -1,18 +1,30 @@
 #!/usr/bin/python3
+from typing import Type
+
+
 try:
     import libnmap.process
     import libnmap.parser
     import tableprint
     import numpy
+    import ipaddress
 except ModuleNotFoundError:
     print("Required modules not found. This program requires Python 3 and required dependicies installed. Run 'pip install python-libnmap tableprint numpy' to install dependicies and try again.")
     exit(1)
 
 HOSTS_TO_SCAN = '192.168.1.0/24'
+DNS_SERVER = '192.168.1.1'
 
 
 def hasHostname(hostnames):
     return len(hostnames) != 0
+
+def isValidIPAddress(IP_ADDR):
+    try:
+        ipaddress.ip_address(IP_ADDR)
+    except ValueError:
+        return False
+    return True
 
 
 def removeDuplicatesFromList(array):
@@ -21,28 +33,44 @@ def removeDuplicatesFromList(array):
     return b
 
 
+def runNmapScan(nmapOptions, dnsServer):
+    if(isValidIPAddress(dnsServer) is True):
+        nmapOptions += ' --dns-servers '
+        nmapOptions += dnsServer
+    else:
+        raise TypeError("Invalid DNS server")
+
+    nm = libnmap.process.NmapProcess(HOSTS_TO_SCAN, options=nmapOptions)
+    rc = nm.run()
+    nmap_report = libnmap.parser.NmapParser.parse(nm.stdout)
+    return nmap_report
+
+
+def Convert2DArrayToNumpyArray(arr):
+    return numpy.array(arr)
+
+
+def print2DArrayAsTable(arr, alignment, tableHeaders):
+    tableprint.table(Convert2DArrayToNumpyArray(arr),
+                     tableHeaders, align=alignment)
+
+
 hosts = []
 
 print("Running standard ping scan...")
-nm = libnmap.process.NmapProcess(HOSTS_TO_SCAN, options="-sn")
-rc = nm.run()
-nmap_report = libnmap.parser.NmapParser.parse(nm.stdout)
+nmap_report = runNmapScan("-sn", DNS_SERVER)
 
 for host in nmap_report.hosts:
     if hasHostname(host.hostnames):
-        hosts.append([host.address, host.hostnames[0]])
+        hosts.append([host.address, ' '.join(host.hostnames)])
 
 print("Running deeper ping scan to find hidden devices...")
-nm = libnmap.process.NmapProcess(HOSTS_TO_SCAN, options="-sn -Pn")
-rc = nm.run()
-nmap_report = libnmap.parser.NmapParser.parse(nm.stdout)
+nmap_report = runNmapScan("-sn -Pn", DNS_SERVER)
 
 for host in nmap_report.hosts:
     if hasHostname(host.hostnames):
-        hosts.append([host.address, host.hostnames[0]])
+        hosts.append([host.address, ' '.join(host.hostnames)])
 
 hostsWithoutDuplicates = removeDuplicatesFromList(hosts)
 
-tableprint.table(
-    numpy.array(hostsWithoutDuplicates), [
-        'IP Address', 'Hostname'], format_spec='5G', width=None, align='left')
+print2DArrayAsTable(hostsWithoutDuplicates, 'left', ['IP Address', 'Hostname'])
