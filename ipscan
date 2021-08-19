@@ -16,8 +16,6 @@ DNS_SERVER = None
 
 def hasHostname(hostnames: List[str]) -> bool:
     return len(hostnames) != 0
-
-
 def isValidIPAddress(IP_ADDR: str) -> bool:
     try:
         ipaddress.ip_address(IP_ADDR)
